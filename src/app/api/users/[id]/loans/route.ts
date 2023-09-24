@@ -12,6 +12,7 @@ export const GET = async (req: NextRequest) => {
 
   const url = `${process.env.GL_API}/users/${userId}/loans`;
   const res = await fetch(url, {
+    cache: "no-store",
     headers: {
       "Content-Type": "application/json",
     },
