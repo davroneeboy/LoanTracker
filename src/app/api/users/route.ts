@@ -1,3 +1,5 @@
+import UserSchema from "@/types/user.type";
+import UserSchemaBase from "@/types/userBase.type";
 import { NextRequest, NextResponse } from "next/server";
 
 const url = `${process.env.GL_API}/users`;
@@ -14,7 +16,7 @@ export const GET = async () => {
 };
 
 export const POST = async (req: NextRequest) => {
-  const body = await req.json();
+  const body: UserSchemaBase = await req.json();
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -23,7 +25,7 @@ export const POST = async (req: NextRequest) => {
     body: JSON.stringify(body),
   });
 
-  const data = await res.json();
+  const data: UserSchema = await res.json();
 
   return NextResponse.json(data);
 };

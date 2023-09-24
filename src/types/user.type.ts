@@ -1,6 +1,7 @@
-interface UserSchema {
+import UserSchemaBase from "./userBase.type";
+
+interface UserSchema extends UserSchemaBase {
   id: number;
-  username: string;
 }
 
 export default UserSchema;
