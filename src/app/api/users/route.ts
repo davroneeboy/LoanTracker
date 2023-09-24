@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const url = `${process.env.GL_API}/users`;
+
 export const GET = async () => {
-  const res = await fetch(`${process.env.GL_API}/users`, {
+  const res = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -13,7 +15,7 @@ export const GET = async () => {
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
-  const res = await fetch(`${process.env.GL_API}/users`, {
+  const res = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,11 +1,11 @@
 "use client";
 
 import useSWR from "swr";
-import User from "@/types/user.type";
+import UserSchema from "@/types/user.type";
 import fetcher from "@/utils/fetcher";
 
 const Users = () => {
-  const { data, isLoading, error } = useSWR<User[]>(`api/users`, fetcher);
+  const { data, isLoading, error } = useSWR<UserSchema[]>(`api/users`, fetcher);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>{`Error: ${error}`}</p>;

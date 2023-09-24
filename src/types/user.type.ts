@@ -1,6 +1,6 @@
-interface User {
+interface UserSchema {
   id: number;
   username: string;
 }
 
-export default User;
+export default UserSchema;
