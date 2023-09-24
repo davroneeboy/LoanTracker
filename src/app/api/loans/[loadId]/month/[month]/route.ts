@@ -8,7 +8,7 @@ export const GET = async (req: NextRequest) => {
     process.env.GL_API
   );
 
-  const res = await fetch(url.href, {
+  const res = await fetch(url, {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",

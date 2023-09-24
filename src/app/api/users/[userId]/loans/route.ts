@@ -2,15 +2,11 @@ import LoanSchema from "@/types/loan.type";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
-  const { pathname } = req.nextUrl;
-  const [, api, users, userId, loans] = pathname.split("/");
+  const url = new URL(
+    `${req.nextUrl.pathname.replace("/api/", "")}`,
+    process.env.GL_API
+  );
 
-  if (!(api === "api" && users === "users" && loans === "loans")) {
-    console.error("Invalid pathname:", req.nextUrl);
-    return NextResponse.json([]);
-  }
-
-  const url = `${process.env.GL_API}/users/${userId}/loans`;
   const res = await fetch(url, {
     cache: "no-store",
     headers: {

@@ -3,7 +3,10 @@ import LoanSchemaBase from "@/types/loanBase.type";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
-  const url = `${process.env.GL_API}/loans`;
+  const url = new URL(
+    req.nextUrl.pathname.replace("/api/", ""),
+    process.env.GL_API
+  );
   const body: LoanSchemaBase = await req.json();
   const res = await fetch(url, {
     cache: "no-store",

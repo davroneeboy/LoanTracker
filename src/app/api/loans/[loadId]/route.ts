@@ -11,16 +11,11 @@ type LoanSchemaBaseWithUserIdRequired = PartiallyOptional<
 
 export const GET = async (req: NextRequest) => {
   const { pathname, searchParams } = req.nextUrl;
-  const [, api, loans, loanId] = pathname.split("/");
 
-  if (!(api === "api" && loans === "loans")) {
-    console.error("Invalid pathname:", req.nextUrl);
-    return NextResponse.json([]);
-  }
-
-  const url = `${
+  const url = new URL(
+    `${pathname.replace("/api/", "")}?${searchParams.toString()}`,
     process.env.GL_API
-  }/loans/${loanId}?${searchParams.toString()}`;
+  );
 
   const res = await fetch(url, {
     cache: "no-store",
@@ -36,23 +31,12 @@ export const GET = async (req: NextRequest) => {
 
 export const PUT = async (req: NextRequest) => {
   const { pathname, searchParams } = req.nextUrl;
-  const userId = searchParams.get("user_id");
-  const [, api, loans, loanId] = pathname.split("/");
   const body: LoanSchemaBaseWithUserIdRequired = await req.json();
 
-  if (!(api === "api" && loans === "loans")) {
-    console.error("Invalid pathname:", req.nextUrl);
-    return NextResponse.json([]);
-  }
-
-  if (userId !== body.owner_id?.toString()) {
-    console.error("UserId and OwnerId mismatched:", searchParams);
-    return NextResponse.json([]);
-  }
-
-  const url = `${
+  const url = new URL(
+    `${pathname.replace("/api/", "")}?${searchParams.toString()}`,
     process.env.GL_API
-  }/loans/${loanId}?${searchParams.toString()}`;
+  );
 
   const res = await fetch(url, {
     cache: "no-store",
