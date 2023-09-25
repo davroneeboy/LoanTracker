@@ -5,6 +5,7 @@ import { Button, Form, Input } from "antd";
 import UserSchemaBase from "@/types/userBase.type";
 import { useRouter } from "next/navigation";
 import UserSchema from "@/types/user.type";
+import Title from "antd/es/typography/Title";
 
 const validateUsername = (rule: any, value: string, callback: any) => {
   if (/^[A-Za-z0-9]+$/.test(value)) {
@@ -35,7 +36,7 @@ const CreateUserForm = () => {
 
       if (response.ok) {
         const data: UserSchema = await response.json();
-        router.push(`/users/${data.id}`);
+        router.push(`/api/users/${data.id}`);
       } else {
         console.error("Error:", response.status);
       }
@@ -80,8 +81,8 @@ const CreateUserForm = () => {
 
 const CreateUser = () => (
   <>
-    <h1>Create User</h1>
-    <CreateUserForm />
+    <Title>Create User</Title>
+    <CreateUserForm />;
   </>
 );
 
