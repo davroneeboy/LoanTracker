@@ -23,7 +23,7 @@ const items: MenuProps["items"] = [
     icon: <UserOutlined />,
     children: [
       {
-        label: <a href="/users">Create User</a>,
+        label: <a href="/users/create">Create User</a>,
         key: "users-create",
         icon: <UserAddOutlined />,
       },
