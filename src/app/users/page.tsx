@@ -36,7 +36,7 @@ const Users = () => {
       dataIndex: "id",
       key: "userId",
       render: (userId) => (
-        <a onClick={() => router.push(`users/${userId}`)}>{userId}</a>
+        <a onClick={() => router.push(`/users/${userId}`)}>{userId}</a>
       ),
     },
     {
@@ -50,7 +50,7 @@ const Users = () => {
       render: (_, record) => (
         <Space size="middle">
           {contextHolder}
-          <a onClick={() => router.push(`users/${record.id}`)}>💸 View Loans</a>
+          <a onClick={() => router.push(`/users/${record.id}`)}>💸 View Loans</a>
           <a
             onClick={() => {
               setUser(record.id);

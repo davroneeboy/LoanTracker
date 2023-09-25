@@ -26,7 +26,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       dataIndex: "id",
       key: "loanId",
       render: (userId) => (
-        <a onClick={() => router.push(`users/${userId}`)}>{userId}</a>
+        <a onClick={() => router.push(`/users/${userId}`)}>{userId}</a>
       ),
     },
     {
@@ -58,7 +58,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       dataIndex: "owner_id",
       key: "ownerId",
       render: (userId) => (
-        <a onClick={() => router.push(`users/${userId}`)}>{userId}</a>
+        <a onClick={() => router.push(`/users/${userId}`)}>{userId}</a>
       ),
     },
     {
