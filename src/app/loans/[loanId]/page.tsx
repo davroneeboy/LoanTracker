@@ -3,9 +3,9 @@
 import { useUserContext } from "@/context/user.context";
 import LoanScheduleSchema from "@/types/loanSchedule.type";
 import fetcher from "@/utils/fetcher";
+import monthToPaymentDate from "@/utils/monthToPaymentDate";
 import Table, { ColumnsType } from "antd/es/table";
 import Title from "antd/es/typography/Title";
-import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 const LoanPage = ({ params }: { params: { loanId: string } }) => {
@@ -38,7 +38,7 @@ const LoanPage = ({ params }: { params: { loanId: string } }) => {
       title: "Payment Date",
       dataIndex: "month",
       key: "paymentDate",
-      render: (month) => month,
+      render: (month) => monthToPaymentDate(month),
     },
     {
       title: "Payment",
