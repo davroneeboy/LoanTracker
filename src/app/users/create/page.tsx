@@ -15,12 +15,6 @@ const validateUsername = (rule: any, value: string, callback: any) => {
   }
 };
 
-type FieldType = {
-  username?: string;
-  password?: string;
-  remember?: string;
-};
-
 const CreateUserForm = () => {
   const router = useRouter();
 
@@ -36,7 +30,7 @@ const CreateUserForm = () => {
 
       if (response.ok) {
         const data: UserSchema = await response.json();
-        router.push(`/api/users/${data.id}`);
+        router.push(`/users/${data.id}`);
       } else {
         console.error("Error:", response.status);
       }
@@ -59,7 +53,7 @@ const CreateUserForm = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item<FieldType>
+      <Form.Item<UserSchemaBase>
         label="Username"
         name="username"
         rules={[

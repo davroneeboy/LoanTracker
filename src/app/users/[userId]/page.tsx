@@ -66,7 +66,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>💸 View Loan</a>
+          <a>🗓️ View Schedule</a>
           <a>✏️ Update Loan</a>
         </Space>
       ),
@@ -110,7 +110,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
     <div>
       <Title>{`User ${userId}`}</Title>
 
-      <Title level={2}>Own Loans</Title>
+      <Title level={2}>My Loans</Title>
       {OwnTable}
 
       <Title level={2}>Shared Loans</Title>

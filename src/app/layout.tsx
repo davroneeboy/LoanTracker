@@ -1,4 +1,3 @@
-import "./globals.css";
 import type { Metadata } from "next";
 import StyledComponentsRegistry from "../../lib/AntdRegistry";
 import TopMenu from "@/components/TopMenu";
