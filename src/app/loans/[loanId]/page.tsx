@@ -9,22 +9,20 @@ import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 const LoanPage = ({ params }: { params: { loanId: string } }) => {
-  const router = useRouter();
   const { user, setUser } = useUserContext();
   const { loanId } = params;
 
-  const {
-    data = [],
-    isLoading,
-    error,
-  } = useSWR<LoanScheduleSchema[]>(
-    `/api/loans/${loanId}?user_id=${user}`,
-    fetcher
-  );
+  const { data, isLoading, error } = useSWR<
+    LoanScheduleSchema[] & { detail: string }
+  >(`/api/loans/${loanId}?user_id=${user}`, fetcher);
 
   if (error) return <p>{`Error: ${error}`}</p>;
 
-  const rollingTotalInterest = data
+  if (data?.hasOwnProperty("detail")) {
+    return <p>{data.detail}</p>;
+  }
+
+  const rollingTotalInterest = (data || [])
     .map((d) => d.interest_payment)
     .reduce((acc, currPayment) => {
       if (acc.length === 0) {
