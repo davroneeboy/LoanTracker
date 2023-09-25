@@ -8,10 +8,15 @@ import Title from "antd/es/typography/Title";
 import { Space, Spin, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
+import appendKeyProp from "@/utils/appendKeyProp";
 
 const Users = () => {
-  const { data, isLoading, error } = useSWR<UserSchema[]>(`api/users`, fetcher);
   const router = useRouter();
+  const {
+    data = [],
+    isLoading,
+    error,
+  } = useSWR<UserSchema[]>(`api/users`, fetcher);
 
   if (error) return <p>{`Error: ${error}`}</p>;
 
@@ -34,31 +39,22 @@ const Users = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>💸 View Loans</a>
+          <a onClick={() => router.push(`users/${record.id}`)}>💸 View Loans</a>
         </Space>
       ),
     },
   ];
 
-  const dataWithKey = data?.map((d) => {
-    return {
-      ...d,
-      key: `user-${d.id}`,
-    };
-  });
-
   return (
     <div>
       <Title>All Users</Title>
       {isLoading ? (
-        <Spin tip="Loading" size="large">
-          <div className="content" />
-        </Spin>
+        <Spin size="large" />
       ) : (
         <Table
           style={{ width: "80%", margin: "0 auto" }}
           columns={columns}
-          dataSource={dataWithKey}
+          dataSource={appendKeyProp(data)}
         />
       )}
     </div>

@@ -13,6 +13,7 @@ export const GET = async (req: NextRequest) => {
       "Content-Type": "application/json",
     },
   });
+
   const data: LoanSchema[] = await res.json();
 
   return NextResponse.json(data);

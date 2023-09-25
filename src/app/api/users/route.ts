@@ -6,6 +6,7 @@ const url = `${process.env.GL_API}/users`;
 
 export const GET = async () => {
   const res = await fetch(url, {
+    cache: "no-store",
     headers: {
       "Content-Type": "application/json",
     },
@@ -18,7 +19,7 @@ export const GET = async () => {
 export const POST = async (req: NextRequest) => {
   const body: UserSchemaBase = await req.json();
   const res = await fetch(url, {
-    cache: 'no-store',
+    cache: "no-store",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
