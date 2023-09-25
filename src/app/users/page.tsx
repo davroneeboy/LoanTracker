@@ -5,10 +5,11 @@ import UserSchema from "@/types/user.type";
 import fetcher from "@/utils/fetcher";
 import Title from "antd/es/typography/Title";
 
-import { Space, Spin, Table } from "antd";
+import { Space, Spin, Table, notification } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 import appendKeyProp from "@/utils/appendKeyProp";
+import { useUserContext } from "@/context/user.context";
 
 const Users = () => {
   const router = useRouter();
@@ -17,6 +18,15 @@ const Users = () => {
     isLoading,
     error,
   } = useSWR<UserSchema[]>(`api/users`, fetcher);
+  const { user, setUser } = useUserContext();
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (message: string) => {
+    api.open({
+      message,
+      duration: 1,
+    });
+  };
 
   if (error) return <p>{`Error: ${error}`}</p>;
 
@@ -39,7 +49,16 @@ const Users = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
+          {contextHolder}
           <a onClick={() => router.push(`users/${record.id}`)}>💸 View Loans</a>
+          <a
+            onClick={() => {
+              setUser(record.id);
+              openNotification(`User ${record.id} Logged In!`);
+            }}
+          >
+            🔑 Switch User
+          </a>
         </Space>
       ),
     },

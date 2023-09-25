@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   BankOutlined,
   HomeOutlined,
@@ -9,11 +9,14 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Menu } from "antd";
+import { Alert, Avatar, Menu } from "antd";
+import { useUserContext } from "@/context/user.context";
+import Title from "antd/es/typography/Title";
+import Link from "next/link";
 
 const items: MenuProps["items"] = [
   {
-    label: <a href="/">Home</a>,
+    label: <Link href="/">Home</Link>,
     key: "home",
     icon: <HomeOutlined />,
   },
@@ -23,12 +26,12 @@ const items: MenuProps["items"] = [
     icon: <UserOutlined />,
     children: [
       {
-        label: <a href="/users/create">Create User</a>,
+        label: <Link href="/users/create">Create User</Link>,
         key: "users-create",
         icon: <UserAddOutlined />,
       },
       {
-        label: <a href="/users">Get All Users</a>,
+        label: <Link href="/users">Get All Users</Link>,
         key: "users-get-all",
         icon: <UsergroupAddOutlined />,
       },
@@ -40,17 +43,25 @@ const items: MenuProps["items"] = [
     icon: <BankOutlined />,
     children: [
       {
-        label: <a href="/users">Create Loan</a>,
+        label: <Link href="/users">Create Loan</Link>,
         key: "loans-create",
       },
       {
-        label: <a href="/users">Get All Loans</a>,
+        label: <Link href="/users">Get All Loans</Link>,
         key: "loans-get-all",
       },
     ],
   },
 ];
 
-const TopMenu = () => <Menu mode="horizontal" items={items} />;
+const TopMenu = () => {
+  const { user, setUser } = useUserContext();
+  return (
+    <>
+      <Menu mode="horizontal" items={items} />
+      <Alert message={`Logged in as User ${user}`} type="info" />
+    </>
+  );
+};
 
 export default TopMenu;
