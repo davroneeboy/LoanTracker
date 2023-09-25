@@ -82,7 +82,7 @@ const CreateUserForm = () => {
 const CreateUser = () => (
   <>
     <Title>Create User</Title>
-    <CreateUserForm />;
+    <CreateUserForm />
   </>
 );
 
