@@ -3,7 +3,7 @@
 import LoanSchema from "@/types/loan.type";
 import appendKeyProp from "@/utils/appendKeyProp";
 import fetcher from "@/utils/fetcher";
-import { Space, Spin, Tag } from "antd";
+import { Space, Tag } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import Title from "antd/es/typography/Title";
 import { useRouter } from "next/navigation";
@@ -66,7 +66,9 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>🗓️ View Schedule</a>
+          <a onClick={() => router.push(`/loans/${record.id}`)}>
+            🗓️ View Schedule
+          </a>
           <a>✏️ Update Loan</a>
         </Space>
       ),
@@ -86,35 +88,25 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
     { own: [] as LoanSchema[], shared: [] as LoanSchema[] }
   );
 
-  const OwnTable = isLoading ? (
-    <Spin size="large" />
-  ) : (
-    <Table
-      style={{ width: "80%", margin: "0 auto" }}
-      columns={columns}
-      dataSource={appendKeyProp(dataByOwner.own)}
-    />
-  );
-
-  const SharedTable = isLoading ? (
-    <Spin size="large" />
-  ) : (
-    <Table
-      style={{ width: "80%", margin: "0 auto" }}
-      columns={columns}
-      dataSource={appendKeyProp(dataByOwner.shared)}
-    />
-  );
-
   return (
     <div>
       <Title>{`User ${userId}`}</Title>
 
       <Title level={2}>My Loans</Title>
-      {OwnTable}
+      <Table
+        style={{ width: "80%", margin: "0 auto" }}
+        columns={columns}
+        dataSource={appendKeyProp(dataByOwner.own)}
+        loading={{ size: "large", spinning: isLoading }}
+      />
 
       <Title level={2}>Shared Loans</Title>
-      {SharedTable}
+      <Table
+        style={{ width: "80%", margin: "0 auto" }}
+        columns={columns}
+        dataSource={appendKeyProp(dataByOwner.shared)}
+        loading={{ size: "large", spinning: isLoading }}
+      />
     </div>
   );
 };

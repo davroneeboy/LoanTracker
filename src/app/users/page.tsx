@@ -5,7 +5,7 @@ import UserSchema from "@/types/user.type";
 import fetcher from "@/utils/fetcher";
 import Title from "antd/es/typography/Title";
 
-import { Space, Spin, Table, notification } from "antd";
+import { Space, Table, notification } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 import appendKeyProp from "@/utils/appendKeyProp";
@@ -50,7 +50,9 @@ const Users = () => {
       render: (_, record) => (
         <Space size="middle">
           {contextHolder}
-          <a onClick={() => router.push(`/users/${record.id}`)}>💸 View Loans</a>
+          <a onClick={() => router.push(`/users/${record.id}`)}>
+            💸 View Loans
+          </a>
           <a
             onClick={() => {
               setUser(record.id);
@@ -67,15 +69,12 @@ const Users = () => {
   return (
     <div>
       <Title>All Users</Title>
-      {isLoading ? (
-        <Spin size="large" />
-      ) : (
-        <Table
-          style={{ width: "80%", margin: "0 auto" }}
-          columns={columns}
-          dataSource={appendKeyProp(data)}
-        />
-      )}
+      <Table
+        style={{ width: "80%", margin: "0 auto" }}
+        columns={columns}
+        dataSource={appendKeyProp(data)}
+        loading={{ size: "large", spinning: isLoading }}
+      />
     </div>
   );
 };
