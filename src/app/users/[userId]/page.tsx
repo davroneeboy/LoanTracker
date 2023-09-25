@@ -1,5 +1,6 @@
 "use client";
 
+import { mapLoansToLoansById, useLoanContext } from "@/context/loan.context";
 import LoanSchema from "@/types/loan.type";
 import appendKeyProp from "@/utils/appendKeyProp";
 import fetcher from "@/utils/fetcher";
@@ -7,9 +8,11 @@ import { Space, Tag } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import Title from "antd/es/typography/Title";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import useSWR from "swr";
 
 const UserPage = ({ params }: { params: { userId: string } }) => {
+  const { loans, setLoans } = useLoanContext();
   const router = useRouter();
   const { userId } = params;
   const {
@@ -17,6 +20,10 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
     isLoading,
     error,
   } = useSWR<LoanSchema[]>(`/api/users/${userId}/loans`, fetcher);
+
+  useEffect(() => {
+    setLoans(mapLoansToLoansById(data));
+  }, [data, setLoans]);
 
   if (error) return <p>{`Error: ${error}`}</p>;
 
@@ -69,7 +76,9 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
           <a onClick={() => router.push(`/loans/${record.id}`)}>
             🗓️ View Schedule
           </a>
-          <a>✏️ Update Loan</a>
+          <a onClick={() => router.push(`/loans/${record.id}/update`)}>
+            ✏️ Update Loan
+          </a>
         </Space>
       ),
     },
