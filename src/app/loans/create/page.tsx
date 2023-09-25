@@ -35,6 +35,7 @@ const CreateLoanForm = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <Form
       name="basic"
