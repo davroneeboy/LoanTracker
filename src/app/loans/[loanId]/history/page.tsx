@@ -1,6 +1,6 @@
 "use client";
 
-import LoanRangeTable from "@/components/LoanRangeTable";
+import LoanRange from "@/components/LoanRange";
 import SelectLoanRange from "@/components/SelectLoanRange";
 import Title from "antd/es/typography/Title";
 import { useState } from "react";
@@ -14,7 +14,7 @@ const LoanHistory = ({ params }: { params: { loanId: string } }) => {
     <>
       <Title>{`Loan ${loanId} History`}</Title>
       <SelectLoanRange setFromDate={setFromDate} setToDate={setToDate} />
-      <LoanRangeTable loanId={loanId} fromDate={fromDate} toDate={toDate} />
+      <LoanRange loanId={loanId} fromDate={fromDate} toDate={toDate} />
     </>
   );
 };
