@@ -4,6 +4,7 @@ import { LoansById, useLoanContext } from "@/context/loan.context";
 import { useUserContext } from "@/context/user.context";
 import LoanSchema from "@/types/loan.type";
 import LoanSchemaBase from "@/types/loanBase.type";
+import { validateNumber } from "@/utils/formValidation";
 import { Button, Divider, Form, Input, Select, Space } from "antd";
 import Title from "antd/es/typography/Title";
 import { useRouter } from "next/navigation";
@@ -92,7 +93,10 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
         <Form.Item
           label="Amount"
           name="amount"
-          rules={[{ required: true, message: "Please input an amount!" }]}
+          rules={[
+            { required: true, message: "Please input an amount!" },
+            { validator: validateNumber },
+          ]}
           initialValue={amount}
         >
           <Input type="number" />
@@ -101,7 +105,10 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
         <Form.Item
           label="APR"
           name="apr"
-          rules={[{ required: true, message: "Please input the APR!" }]}
+          rules={[
+            { required: true, message: "Please input the APR!" },
+            { validator: validateNumber },
+          ]}
           initialValue={apr}
         >
           <Input type="number" />
@@ -110,7 +117,10 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
         <Form.Item
           label="Term"
           name="term"
-          rules={[{ required: true, message: "Please input the term!" }]}
+          rules={[
+            { required: true, message: "Please input the term!" },
+            { validator: validateNumber },
+          ]}
           initialValue={term}
         >
           <Input type="number" />

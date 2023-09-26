@@ -3,6 +3,7 @@
 import { useUserContext } from "@/context/user.context";
 import LoanSchema from "@/types/loan.type";
 import LoanSchemaBase from "@/types/loanBase.type";
+import { validateNumber } from "@/utils/formValidation";
 import { Form, Input, Button, Select } from "antd";
 import Title from "antd/es/typography/Title";
 import { useRouter } from "next/navigation";
@@ -50,7 +51,10 @@ const CreateLoanForm = () => {
       <Form.Item
         label="Amount"
         name="amount"
-        rules={[{ required: true, message: "Please input an amount!" }]}
+        rules={[
+          { required: true, message: "Please input an amount!" },
+          { validator: validateNumber },
+        ]}
       >
         <Input type="number" />
       </Form.Item>
@@ -58,7 +62,10 @@ const CreateLoanForm = () => {
       <Form.Item
         label="APR"
         name="apr"
-        rules={[{ required: true, message: "Please input the APR!" }]}
+        rules={[
+          { required: true, message: "Please input the APR!" },
+          { validator: validateNumber },
+        ]}
       >
         <Input type="number" />
       </Form.Item>
@@ -66,7 +73,10 @@ const CreateLoanForm = () => {
       <Form.Item
         label="Term"
         name="term"
-        rules={[{ required: true, message: "Please input the term!" }]}
+        rules={[
+          { required: true, message: "Please input the term!" },
+          { validator: validateNumber },
+        ]}
         initialValue={30}
       >
         <Input type="number" />
