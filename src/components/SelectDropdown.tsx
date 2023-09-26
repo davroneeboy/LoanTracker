@@ -50,10 +50,10 @@ const SelectDropdown: React.FC<any> = ({ loanId, options }) => {
               openNotification("Loan Sharing Successful");
               router.push(`/users/${userId}`);
             } else {
-              openNotification(`Error: ${data}`);
+              openNotification(`Error: ${JSON.stringify(data)}`);
             }
           } else {
-            openNotification(`Error: ${data}`);
+            openNotification(`Error: ${JSON.stringify(data)}`);
           }
         }}
       >
