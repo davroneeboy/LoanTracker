@@ -35,13 +35,12 @@ const LoanRange: React.FC<LoanRangeProps> = ({ loanId, fromDate, toDate }) => {
           : applyDateLimit(fromDate);
 
         const promises = Array.from({ length: rangeLength }, (_, i) =>
-          fetchMonthlyLoanSummary(loanId, user, i + 1)
+        fetchMonthlyLoanSummary(loanId, user, i + 1)
         );
 
         const results = await Promise.all(promises);
-        await Promise.all(results.map((result) => result.json())).then((data) =>
-          setSummary(data as any)
-        );
+        const data = await Promise.all(results.map((result) => result.json()));
+        setSummary(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -55,7 +54,7 @@ const LoanRange: React.FC<LoanRangeProps> = ({ loanId, fromDate, toDate }) => {
 
   const datedSummary = validSummary.map((summary, i) => ({
     ...summary,
-    payment_date: monthToPaymentDate(i + 1),
+    payment_date: monthToPaymentDate(i + applyDateLimit(fromDate)),
   }));
 
   return <LoanRangeTable data={appendKeyProp(datedSummary)} />;
