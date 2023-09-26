@@ -73,8 +73,9 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => router.push(`/loans/${record.id}`)}>
-            🗓️ View Schedule
+          <a onClick={() => router.push(`/loans/${record.id}`)}>🗓️ Schedule</a>
+          <a onClick={() => router.push(`/loans/${record.id}/history`)}>
+            💰 Payment History
           </a>
           <a onClick={() => router.push(`/loans/${record.id}/update`)}>
             ✏️ Update Loan

@@ -1,18 +1,13 @@
 "use client";
 
 import LoanTable from "@/components/LoanTable";
-import SelectLoanRange from "@/components/SelectLoanRange";
 import { useUserContext } from "@/context/user.context";
 import LoanScheduleSchema from "@/types/loanSchedule.type";
 import fetcher from "@/utils/fetcher";
 import Title from "antd/es/typography/Title";
-import { useState } from "react";
 import useSWR from "swr";
 
 const LoanPage = ({ params }: { params: { loanId: string } }) => {
-  const [fromDate, setFromDate] = useState<number | null>(null);
-  const [toDate, setToDate] = useState<number | null>(null);
-
   const { user, setUser } = useUserContext();
   const { loanId } = params;
 
@@ -29,15 +24,7 @@ const LoanPage = ({ params }: { params: { loanId: string } }) => {
   return (
     <>
       <Title>{`Loan ${loanId}`}</Title>
-      <SelectLoanRange setFromDate={setFromDate} setToDate={setToDate} />
-      {toDate || fromDate ? (
-        <>
-          <div>{fromDate}</div>
-          <div>{toDate}</div>
-        </>
-      ) : (
-        <LoanTable data={data || []} isLoading={isLoading} />
-      )}
+      <LoanTable data={data || []} isLoading={isLoading} />
     </>
   );
 };

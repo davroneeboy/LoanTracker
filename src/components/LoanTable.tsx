@@ -3,14 +3,8 @@ import appendKeyProp from "@/utils/appendKeyProp";
 import monthToPaymentDate from "@/utils/monthToPaymentDate";
 import Table, { ColumnsType } from "antd/es/table";
 
-const LoanTable = ({
-  data,
-  isLoading,
-}: {
-  data: LoanScheduleSchema[];
-  isLoading?: boolean;
-}) => {
-  const rollingTotalInterest = (data || [])
+const rollingTotalInterest = (data: LoanScheduleSchema[]) =>
+  data
     .map((d) => d.interest_payment)
     .reduce((acc, currPayment) => {
       if (acc.length === 0) {
@@ -21,6 +15,13 @@ const LoanTable = ({
       return acc;
     }, [] as number[]);
 
+const LoanTable = ({
+  data,
+  isLoading,
+}: {
+  data: LoanScheduleSchema[];
+  isLoading?: boolean;
+}) => {
   const columns: ColumnsType<LoanScheduleSchema> = [
     {
       title: "Payment Date",
@@ -63,7 +64,7 @@ const LoanTable = ({
       dataIndex: "total_interest",
       key: "totalInterest",
       render: (_, record, index) =>
-        rollingTotalInterest[index].toLocaleString("en-US", {
+        rollingTotalInterest(data)[index].toLocaleString("en-US", {
           style: "currency",
           currency: "USD",
         }),
