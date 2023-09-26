@@ -6,9 +6,13 @@ import { useUserContext } from "@/context/user.context";
 import LoanScheduleSchema from "@/types/loanSchedule.type";
 import fetcher from "@/utils/fetcher";
 import Title from "antd/es/typography/Title";
+import { useState } from "react";
 import useSWR from "swr";
 
 const LoanPage = ({ params }: { params: { loanId: string } }) => {
+  const [fromDate, setFromDate] = useState<number | null>(null);
+  const [toDate, setToDate] = useState<number | null>(null);
+
   const { user, setUser } = useUserContext();
   const { loanId } = params;
 
@@ -19,14 +23,21 @@ const LoanPage = ({ params }: { params: { loanId: string } }) => {
   if (error) return <p>{`Error: ${error}`}</p>;
 
   if (data?.hasOwnProperty("detail")) {
-    return <p>{data.detail}</p>;
+    return <p>{`Error: ${data.detail}`}</p>;
   }
 
   return (
     <>
       <Title>{`Loan ${loanId}`}</Title>
-      <SelectLoanRange />
-      <LoanTable data={data || []} isLoading={isLoading} />
+      <SelectLoanRange setFromDate={setFromDate} setToDate={setToDate} />
+      {toDate || fromDate ? (
+        <>
+          <div>{fromDate}</div>
+          <div>{toDate}</div>
+        </>
+      ) : (
+        <LoanTable data={data || []} isLoading={isLoading} />
+      )}
     </>
   );
 };
