@@ -41,7 +41,7 @@ const LoanShare = ({ params }: { params: { loanId: string } }) => {
         </a>
       </Space>
       <Divider />
-      <SelectDropdown options={options} />
+      <SelectDropdown loanId={loanId} options={options} />
     </>
   );
 };

@@ -1,17 +1,28 @@
 import React, { useState } from "react";
-import { Button, Divider, Select } from "antd";
+import { Button, Divider, Select, notification } from "antd";
+import { useRouter } from "next/navigation";
+import { useUserContext } from "@/context/user.context";
 
 const filterOption = (
   input: string,
   option?: { label: string; value: string }
 ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
-const SelectDropdown: React.FC<any> = ({ options }) => {
+const SelectDropdown: React.FC<any> = ({ loanId, options }) => {
   const [userId, setUserId] = useState("");
   const onChange = (value: string) => setUserId(value);
+  const { user: ownerId, setUser: setOwnerId } = useUserContext();
+  const [api, contextHolder] = notification.useNotification();
+  const router = useRouter();
+
+  const openNotification = (message: string) =>
+    api.open({
+      message,
+    });
 
   return (
     <>
+      {contextHolder}
       <Select
         showSearch
         placeholder="Select a User"
@@ -21,7 +32,31 @@ const SelectDropdown: React.FC<any> = ({ options }) => {
         options={options}
       />
       <Divider />
-      <Button type="primary" onClick={(e) => console.log(userId, e)}>
+      <Button
+        type="primary"
+        onClick={async () => {
+          const url = `/api/loans/${loanId}/share?owner_id=${ownerId}&user_id=${userId}`;
+          const res = await fetch(url, {
+            cache: "no-store",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const data = await res.json();
+
+          if (data && data[0]) {
+            if (data[0] === "success") {
+              openNotification("Loan Sharing Successful");
+              router.push(`/users/${userId}`);
+            } else {
+              openNotification(`Error: ${data}`);
+            }
+          } else {
+            openNotification(`Error: ${data}`);
+          }
+        }}
+      >
         Share Loan
       </Button>
     </>
