@@ -17,7 +17,7 @@ const Users = () => {
     data = [],
     isLoading,
     error,
-  } = useSWR<UserSchema[]>(`api/users`, fetcher);
+  } = useSWR<UserSchema[]>(`/api/users`, fetcher);
   const { user, setUser } = useUserContext();
   const [api, contextHolder] = notification.useNotification();
 

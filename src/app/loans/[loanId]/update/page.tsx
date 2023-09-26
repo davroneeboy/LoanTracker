@@ -4,7 +4,7 @@ import { LoansById, useLoanContext } from "@/context/loan.context";
 import { useUserContext } from "@/context/user.context";
 import LoanSchema from "@/types/loan.type";
 import LoanSchemaBase from "@/types/loanBase.type";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Divider, Form, Input, Select, Space } from "antd";
 import Title from "antd/es/typography/Title";
 import { useRouter } from "next/navigation";
 
@@ -66,6 +66,19 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
   return (
     <>
       <Title>{`Update Loan ${loanId}`}</Title>
+      <Space size="middle">
+        <a onClick={() => router.push(`/loans/${loanId}`)}>🗓️ Schedule</a>
+        <a onClick={() => router.push(`/loans/${loanId}/history`)}>
+          💰 Payment History
+        </a>
+        <a onClick={() => router.push(`/loans/${loanId}/update`)}>
+          ✏️ Update Loan
+        </a>
+        <a onClick={() => router.push(`/loans/${loanId}/share`)}>
+          ↪️ Share Loan
+        </a>
+      </Space>
+      <Divider />
       <Form
         name="basic"
         labelCol={{ span: 8 }}

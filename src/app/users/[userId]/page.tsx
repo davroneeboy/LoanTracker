@@ -80,6 +80,9 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
           <a onClick={() => router.push(`/loans/${record.id}/update`)}>
             ✏️ Update Loan
           </a>
+          <a onClick={() => router.push(`/loans/${record.id}/share`)}>
+            ↪️ Share Loan
+          </a>
         </Space>
       ),
     },
