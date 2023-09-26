@@ -3,6 +3,8 @@ import StyledComponentsRegistry from "../../lib/AntdRegistry";
 import TopMenu from "@/components/TopMenu";
 import { UserContextProvider } from "@/context/user.context";
 import { LoanContextProvider } from "@/context/loan.context";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: "Greystone Labs Frontend Code Challenge",
@@ -21,7 +23,7 @@ export default function RootLayout({
           <LoanContextProvider>
             <StyledComponentsRegistry>
               <TopMenu />
-              {children}
+              <Suspense fallback={<Loading />}>{children}</Suspense>
             </StyledComponentsRegistry>
           </LoanContextProvider>
         </UserContextProvider>
