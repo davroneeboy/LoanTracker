@@ -3,8 +3,9 @@
 import { useUserContext } from "@/context/user.context";
 
 const App = () => {
-  const { user, setUser } = useUserContext();
-  return <div>Hello World</div>;
+  // Placeholder For Proper Landing Page
+  // Set in next.config.js to redirect to /users
+  return <div></div>;
 };
 
 export default App;
