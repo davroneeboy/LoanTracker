@@ -1,4 +1,6 @@
 import { useUserContext } from "@/context/user.context";
+import LoanSummarySchema from "@/types/loanSummary.type";
+import { HTTPValidationError } from "@/types/validationError.type";
 import React, { useEffect, useState } from "react";
 
 const applyDateLimit = (month: number | null) =>
@@ -21,7 +23,9 @@ const LoanRangeTable: React.FC<LoanRangeTableProps> = ({
   fromDate,
   toDate,
 }) => {
-  const [summary, setSummary] = useState([]);
+  const [summary, setSummary] = useState(
+    [] as (LoanSummarySchema | HTTPValidationError)[]
+  );
   const { user, setUser } = useUserContext();
 
   useEffect(() => {
@@ -46,7 +50,9 @@ const LoanRangeTable: React.FC<LoanRangeTableProps> = ({
     fetchData();
   }, [fromDate, loanId, toDate, user]);
 
-  return <div>{JSON.stringify(summary)}</div>;
+  const validSummary = summary.filter((el) => !el.hasOwnProperty("detail"));
+
+  return <div>{JSON.stringify(validSummary)}</div>;
 };
 
 export default LoanRangeTable;
