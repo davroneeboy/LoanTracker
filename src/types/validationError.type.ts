@@ -5,7 +5,7 @@ interface ValidationError {
 }
 
 export interface HTTPValidationError {
-  detail: ValidationError | string;
+  detail: ValidationError;
 }
 
 export default ValidationError;

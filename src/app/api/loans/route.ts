@@ -17,6 +17,18 @@ export const POST = async (req: NextRequest) => {
     body: JSON.stringify(body),
   });
 
+  if (!res.ok) {
+    const errorData = await res.json();
+
+    return NextResponse.json(
+      {
+        error: errorData,
+        statusCode: res.status,
+      },
+      { status: res.status }
+    );
+  }
+
   const data: LoanSchema = await res.json();
 
   return NextResponse.json(data);

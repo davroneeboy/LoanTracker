@@ -13,6 +13,18 @@ export const GET = async () => {
   });
   const data = await res.json();
 
+  if (!res.ok) {
+    const errorData = await res.json();
+
+    return NextResponse.json(
+      {
+        error: errorData,
+        statusCode: res.status,
+      },
+      { status: res.status }
+    );
+  }
+
   return NextResponse.json(data);
 };
 
@@ -26,6 +38,18 @@ export const POST = async (req: NextRequest) => {
     },
     body: JSON.stringify(body),
   });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+
+    return NextResponse.json(
+      {
+        error: errorData,
+        statusCode: res.status,
+      },
+      { status: res.status }
+    );
+  }
 
   const data: UserSchema = await res.json();
 

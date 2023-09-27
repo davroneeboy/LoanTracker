@@ -15,6 +15,18 @@ export const GET = async (req: NextRequest) => {
     },
   });
 
+  if (!res.ok) {
+    const errorData = await res.json();
+
+    return NextResponse.json(
+      {
+        error: errorData,
+        statusCode: res.status,
+      },
+      { status: res.status }
+    );
+  }
+
   const data: LoanSummarySchema = await res.json();
 
   return NextResponse.json(data);

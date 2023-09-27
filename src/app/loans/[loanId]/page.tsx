@@ -3,7 +3,6 @@
 import LoanTable from "@/components/LoanTable";
 import { useUserContext } from "@/context/user.context";
 import LoanScheduleSchema from "@/types/loanSchedule.type";
-import { HTTPValidationError } from "@/types/validationError.type";
 import fetcher from "@/utils/fetcher";
 import { Divider, Space } from "antd";
 import Title from "antd/es/typography/Title";
@@ -15,14 +14,13 @@ const LoanPage = ({ params }: { params: { loanId: string } }) => {
   const { loanId } = params;
   const router = useRouter();
 
-  const { data, isLoading, error } = useSWR<
-    LoanScheduleSchema[] & HTTPValidationError
-  >(`/api/loans/${loanId}?user_id=${user}`, fetcher);
+  const { data, isLoading, error } = useSWR<LoanScheduleSchema[]>(
+    `/api/loans/${loanId}?user_id=${user}`,
+    fetcher
+  );
 
-  if (error) return <p>{`Error: ${error}`}</p>;
-
-  if (data?.hasOwnProperty("detail")) {
-    return <p>{`Error: ${data.detail}`}</p>;
+  if (error) {
+    return <p>{`Error: ${error}`}</p>;
   }
 
   return (
