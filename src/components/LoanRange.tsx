@@ -4,6 +4,7 @@ import appendKeyProp from "@/utils/appendKeyProp";
 import monthToPaymentDate from "@/utils/monthToPaymentDate";
 import React, { useEffect, useState } from "react";
 import LoanRangeTable from "./LoanRangeTable";
+import ErrorMessage from "./ErrorMessage";
 
 const applyDateLimit = (month: number | null) =>
   month === null || month < 0 ? 0 : month;
@@ -59,7 +60,7 @@ const LoanRange: React.FC<LoanRangeProps> = ({ loanId, fromDate, toDate }) => {
         );
         setSummary(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        return <ErrorMessage message={`${JSON.stringify(error)}`} />;
       }
     };
     fetchData();

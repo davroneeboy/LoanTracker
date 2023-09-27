@@ -1,10 +1,12 @@
 "use client";
 
+import ErrorMessage from "@/components/ErrorMessage";
 import LoanTable from "@/components/LoanTable";
 import { useUserContext } from "@/context/user.context";
 import LoanScheduleSchema from "@/types/loanSchedule.type";
+import { ApiValidationError } from "@/types/validationError.type";
 import fetcher from "@/utils/fetcher";
-import { Divider, Space } from "antd";
+import { Alert, Divider, Space } from "antd";
 import Title from "antd/es/typography/Title";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
@@ -14,13 +16,16 @@ const LoanPage = ({ params }: { params: { loanId: string } }) => {
   const { loanId } = params;
   const router = useRouter();
 
-  const { data, isLoading, error } = useSWR<LoanScheduleSchema[]>(
-    `/api/loans/${loanId}?user_id=${user}`,
-    fetcher
-  );
+  const { data, isLoading, error } = useSWR<
+    LoanScheduleSchema[] & ApiValidationError
+  >(`/api/loans/${loanId}?user_id=${user}`, fetcher);
+
+  if (data?.error) {
+    return <ErrorMessage message={`${data.error.detail}`} />;
+  }
 
   if (error) {
-    return <p>{`Error: ${error}`}</p>;
+    return <ErrorMessage message={`${JSON.stringify(error)}`} />;
   }
 
   return (

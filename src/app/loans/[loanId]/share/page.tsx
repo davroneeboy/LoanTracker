@@ -1,7 +1,9 @@
 "use client";
 
+import ErrorMessage from "@/components/ErrorMessage";
 import SelectDropdown from "@/components/SelectDropdown";
 import UserSchema from "@/types/user.type";
+import { ApiValidationError } from "@/types/validationError.type";
 import fetcher from "@/utils/fetcher";
 import { UserOutlined } from "@ant-design/icons";
 import { Divider, Space, Spin } from "antd";
@@ -13,15 +15,18 @@ const LoanShare = ({ params }: { params: { loanId: string } }) => {
   const { loanId } = params;
   const router = useRouter();
 
-  const {
-    data = [],
-    isLoading,
-    error,
-  } = useSWR<UserSchema[]>(`/api/users`, fetcher);
+  const { data, isLoading, error } = useSWR<UserSchema[] & ApiValidationError>(
+    `/api/users`,
+    fetcher
+  );
 
-  if (error) return <p>{`Error: ${error}`}</p>;
+  if (data?.error) {
+    return <ErrorMessage message={`${data.error.detail}`} />;
+  }
 
-  const options = data.map((d) => menuItem(d));
+  if (error) return <ErrorMessage message={`${JSON.stringify(error)}`} />;
+
+  const options = data?.map((d) => menuItem(d)) || [];
 
   return (
     <>

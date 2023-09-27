@@ -39,7 +39,7 @@ To run this project locally, follow these steps:
 
 - [**Edit Loan Details:**](src/app/loans/[loanId]/update/page.tsx) Was not specified in the scoring rubric but was well documented. There was a minor bug discovered with this endpoint which I mitigated away with form validation. Documented in `API Bug 1`
 - [**Form Validation:**](src/utils/formValidation.ts) Notifies end users when an input does not match the specified rule(s) and returns an error message.
-- [**Proper error handling:**](src/components/SelectDropdown.tsx#L53) All async functions have a catch and will throw a pop-up error message, render the error message in a component, or provide a `console.error` at minimum.
+- **Proper error handling:** All async functions have a catch and will throw a [pop-up error message](src/components/SelectDropdown.tsx#L53), render the error message in the [ErrorMessage](src/components/ErrorMessage.tsx) component, or provide a `console.error` at minimum.
 - **Good style:** Leveraged Ant Design component library for faster velocity. For long term projects my preference is either TailwindCSS or at minimum Material UI.
 - [**State & component testing:**](src/__tests__) Included Jest & React Testing Library support to the application and included some testing for key React Components that rely on state.
 
