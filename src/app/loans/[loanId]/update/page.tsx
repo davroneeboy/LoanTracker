@@ -135,9 +135,7 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
           <Select
             options={[
               { value: "active", label: "Active" },
-              { value: "approved", label: "Approved" },
               { value: "inactive", label: "Inactive" },
-              { value: "forbearance", label: "Forbearance" },
             ]}
           />
         </Form.Item>
