@@ -20,6 +20,8 @@ const SelectDropdown: React.FC<any> = ({ loanId, options }) => {
       message,
     });
 
+  console.log("options", options);
+
   return (
     <>
       {contextHolder}
