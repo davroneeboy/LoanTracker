@@ -1,11 +1,10 @@
 "use client";
 
 import SelectDropdown from "@/components/SelectDropdown";
-import { useUserContext } from "@/context/user.context";
 import UserSchema from "@/types/user.type";
 import fetcher from "@/utils/fetcher";
 import { UserOutlined } from "@ant-design/icons";
-import { Divider, Space } from "antd";
+import { Divider, Space, Spin } from "antd";
 import Title from "antd/es/typography/Title";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
@@ -19,7 +18,6 @@ const LoanShare = ({ params }: { params: { loanId: string } }) => {
     isLoading,
     error,
   } = useSWR<UserSchema[]>(`/api/users`, fetcher);
-  const { user, setUser } = useUserContext();
 
   if (error) return <p>{`Error: ${error}`}</p>;
 
@@ -41,7 +39,11 @@ const LoanShare = ({ params }: { params: { loanId: string } }) => {
         </a>
       </Space>
       <Divider />
-      <SelectDropdown loanId={loanId} options={options} />
+      {isLoading ? (
+        <Spin size="large" />
+      ) : (
+        <SelectDropdown loanId={loanId} options={options} />
+      )}
     </>
   );
 };
