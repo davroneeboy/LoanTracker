@@ -37,6 +37,7 @@ To run this project locally, follow these steps:
 
 ## Features (Extra)
 
+- [**Edit Loan Details:**](src/app/loans/[loanId]/update/page.tsx) Was not specified in the scoring rubric but was well documented. There was a minor bug discovered with this endpoint which I mitigated away with form validation. Documented in `API Bug 1`
 - [**Form Validation:**](src/utils/formValidation.ts) Notifies end users when an input does not match the specified rule(s) and returns an error message.
 - **Proper error handling:** All async functions have a catch and will throw a pop-up error message or at least provide a `console.error` at minimum.
 - **Good style:** Leveraged Ant Design component library for faster velocity. For long term projects my preference is either TailwindCSS or at minimum Material UI.
@@ -59,13 +60,13 @@ To run this project locally, follow these steps:
 
 ## Bugs Discovered / Feedback
 
-- API Bug: When editing an existing Loan, assigning an `Owner ID` that is different that the current `User ID` does not throw an error on the API side and instead behaves as if I just shared the Loan to the newly assigned Owner. This issue is prevented on the Front-End using form validations.
-- API Bug: The `One-Many` or `Many-Many` relation between `User` and `Loan` is not enforced on the database. I was able to insert invalid User IDs, such as `0` or `999`. This risk is mitgated on the front end with form validations or limiting the options to valid users using the [`SelectDropdown`](src/components/SelectDropdown.tsx) Component of all Users.
+- API Bug 1: When editing an existing Loan, assigning an `Owner ID` that is different that the current `User ID` does not throw an error on the API side and instead behaves as if I just shared the Loan to the newly assigned Owner. This issue is prevented on the Front-End using form validations.
+- API Bug 2: The `One-Many` or `Many-Many` relation between `User` and `Loan` is not enforced on the database. I was able to insert invalid User IDs, such as `0` or `999`. This risk is mitgated on the front end with form validations or limiting the options to valid users using the [`SelectDropdown`](src/components/SelectDropdown.tsx) Component of all Users.
 - Documentation: `POST: /loans/{loan_id}/share` is stating that a `200` response is a `string` type while the API is actually returning `[string]`. For now I prevented this issue by checking the 0th element's value in [`SelectDropdown` L51](src/components/SelectDropdown.tsx#L51)
 - Documentation: `LoanSchemaBase.status` is stated as a `string` but should more accurately be described as an `enum` of `active` and `inactive`. I only discovered this while testing invalid inputs.
-- API Spec: There are certain instances where the API Doc is missing certain information or the API response code and body could be more descriptive which leads to errors being caught later than preferred or resulting in awkward union types because they all share the same HTTP Status Code. An example can be found in [`LoanRange.tsx`  L26](src/app/loans/[loanId]/page.tsx)
+- API Spec: There are certain instances where the API Doc is missing certain information or the API response code and body could be more descriptive which leads to errors being caught later than preferred or resulting in awkward union types because they all share the same HTTP Status Code. An example can be found in [`LoanRange.tsx`  L19](src/app/loans/[loanId]/page.tsx#L19)
   - Current Behavior:
-    - Req: `GET: http://localhost:3000/api/loans/35?user_id=5`
-    - Res: `200: {"detail": "User 5 does not have access to loan 35"}`
+    - Request: `GET: /api/loans/35?user_id=5`
+    - Response: `200 OK: { "detail": "User 5 does not have access to loan 35" }`
   - Expected Behavior:
-    - Res: `403: {"detail": "User 5 does not have access to loan 35"}`
+    - Response: `403 Forbidden: { "detail": "User 5 does not have access to loan 35" }`
