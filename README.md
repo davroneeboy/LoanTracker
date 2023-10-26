@@ -11,7 +11,7 @@ To run this project locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/andynullwong/greystone-frontend.git
+   git clone https://github.com/andynullwong/loan-tracker-fullstack.git
    ```
 
 2. Install the dependencies:
