@@ -1,4 +1,4 @@
-# Greystone Labs Frontend Code Challenge
+# Fullstack Loan Tracker Application
 
 ## Online Demo
 
