@@ -1,4 +1,4 @@
-import { DatePicker, Space } from "antd";
+import { DatePicker } from "antd";
 import { Dispatch, SetStateAction } from "react";
 import dayjs, { Dayjs } from "dayjs";
 
@@ -18,16 +18,17 @@ const SelectLoanRange: React.FC<{
   setToDate: Dispatch<SetStateAction<number | null>>;
 }> = ({ setFromDate, setToDate }) => {
   return (
-    <Space direction="vertical" size={12}>
-      <RangePicker
-        picker="month"
-        disabledDate={disabledDate}
-        onCalendarChange={(dates) => {
-          setFromDate(dates?.[0] ? monthsDifference(dates?.[0]) : null);
-          setToDate(dates?.[1] ? monthsDifference(dates?.[1]) : null);
-        }}
-      />
-    </Space>
+    <RangePicker
+      picker="month"
+      size="large"
+      disabledDate={disabledDate}
+      placeholder={["Начальная дата", "Конечная дата"]}
+      className="w-full rounded-lg"
+      onCalendarChange={(dates) => {
+        setFromDate(dates?.[0] ? monthsDifference(dates?.[0]) : null);
+        setToDate(dates?.[1] ? monthsDifference(dates?.[1]) : null);
+      }}
+    />
   );
 };
 

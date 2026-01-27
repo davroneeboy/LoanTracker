@@ -3,13 +3,12 @@
 import useSWR from "swr";
 import UserSchema from "@/types/user.type";
 import fetcher from "@/utils/fetcher";
-import Title from "antd/es/typography/Title";
-
-import { Space, Table, notification } from "antd";
+import { Space, Table, notification, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 import appendKeyProp from "@/utils/appendKeyProp";
 import { useUserContext } from "@/context/user.context";
+import { EyeOutlined, UserSwitchOutlined } from "@ant-design/icons";
 
 const Users = () => {
   const router = useRouter();
@@ -21,60 +20,97 @@ const Users = () => {
   const { user, setUser } = useUserContext();
   const [api, contextHolder] = notification.useNotification();
 
+  const handleViewLoans = (userId: number) => {
+    router.push(`/users/${userId}`);
+  };
+
+  const handleSwitchUser = (userId: number) => {
+    setUser(userId);
+    openNotification(`Пользователь ${userId} вошел в систему!`);
+  };
+
   const openNotification = (message: string) => {
     api.open({
       message,
-      duration: 1,
+      duration: 2,
+      placement: "topRight",
     });
   };
 
-  if (error) return <p>{`Ошибка: ${error}`}</p>;
+  if (error) {
+    return (
+      <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+        Ошибка: {String(error)}
+      </div>
+    );
+  }
 
   const columns: ColumnsType<UserSchema> = [
     {
-      title: "Id",
+      title: "ID",
       dataIndex: "id",
       key: "userId",
       render: (userId) => (
-        <a onClick={() => router.push(`/users/${userId}`)}>{userId}</a>
+        <span className="font-mono text-indigo-600 font-semibold">{userId}</span>
       ),
+      width: 100,
     },
     {
       title: "Имя пользователя",
       dataIndex: "username",
       key: "username",
+      render: (username) => (
+        <span className="text-slate-700 font-medium">{username}</span>
+      ),
     },
     {
-      title: "Действие",
+      title: "Действия",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
           {contextHolder}
-          <a onClick={() => router.push(`/users/${record.id}`)}>
-            💸 Просмотр займов
-          </a>
-          <a
-            onClick={() => {
-              setUser(record.id);
-              openNotification(`Пользователь ${record.id} вошел в систему!`);
-            }}
+          <Button
+            type="default"
+            icon={<EyeOutlined />}
+            onClick={() => handleViewLoans(record.id)}
+            className="hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-600 transition-colors"
           >
-            🔑 Сменить пользователя
-          </a>
+            Просмотр займов
+          </Button>
+          <Button
+            type="primary"
+            icon={<UserSwitchOutlined />}
+            onClick={() => handleSwitchUser(record.id)}
+            className="bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700"
+          >
+            Сменить пользователя
+          </Button>
         </Space>
       ),
     },
   ];
 
   return (
-    <div>
-      <Title>Все пользователи</Title>
-      <Table
-        style={{ width: "80%", margin: "0 auto" }}
-        columns={columns}
-        dataSource={appendKeyProp(data)}
-        loading={{ size: "large", spinning: isLoading }}
-      />
+    <div className="space-y-6">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent mb-2">
+          Все пользователи
+        </h1>
+        <p className="text-slate-500">Управление пользователями системы</p>
+      </div>
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <Table
+          columns={columns}
+          dataSource={appendKeyProp(data)}
+          loading={{ size: "large", spinning: isLoading }}
+          pagination={{
+            pageSize: 10,
+            showSizeChanger: true,
+            showTotal: (total) => `Всего пользователей: ${total}`,
+          }}
+          rowClassName="hover:bg-indigo-50/50 transition-colors"
+        />
+      </div>
     </div>
   );
 };
