@@ -24,13 +24,13 @@ const LoanTable = ({
 }) => {
   const columns: ColumnsType<LoanScheduleSchema> = [
     {
-      title: "Payment Date",
+      title: "Дата платежа",
       dataIndex: "month",
       key: "paymentDate",
       render: (month) => monthToPaymentDate(month),
     },
     {
-      title: "Payment",
+      title: "Платеж",
       dataIndex: "total_payment",
       key: "totalPayment",
       render: (payment) =>
@@ -40,7 +40,7 @@ const LoanTable = ({
         }),
     },
     {
-      title: "Principal",
+      title: "Основной долг",
       dataIndex: "principal_payment",
       key: "principalPayment",
       render: (payment) =>
@@ -50,7 +50,7 @@ const LoanTable = ({
         }),
     },
     {
-      title: "Interest Payment",
+      title: "Процентный платеж",
       dataIndex: "interest_payment",
       key: "interestPayment",
       render: (payment) =>
@@ -60,7 +60,7 @@ const LoanTable = ({
         }),
     },
     {
-      title: "Total Interest",
+      title: "Общий процент",
       dataIndex: "total_interest",
       key: "totalInterest",
       render: (_, record, index) =>
@@ -70,7 +70,7 @@ const LoanTable = ({
         }),
     },
     {
-      title: "Balance",
+      title: "Баланс",
       dataIndex: "close_balance",
       key: "closeBalance",
       render: (balance) =>

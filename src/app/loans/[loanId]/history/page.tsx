@@ -15,22 +15,22 @@ const LoanHistory = ({ params }: { params: { loanId: string } }) => {
 
   return (
     <>
-      <Title>{`Loan ${loanId} History`}</Title>
+      <Title>{`История займа ${loanId}`}</Title>
       <Space size="middle">
-        <a onClick={() => router.push(`/loans/${loanId}`)}>🗓️ Schedule</a>
+        <a onClick={() => router.push(`/loans/${loanId}`)}>🗓️ График</a>
         <a onClick={() => router.push(`/loans/${loanId}/history`)}>
-          💰 Payment History
+          💰 История платежей
         </a>
         <a onClick={() => router.push(`/loans/${loanId}/update`)}>
-          ✏️ Update Loan
+          ✏️ Обновить займ
         </a>
         <a onClick={() => router.push(`/loans/${loanId}/share`)}>
-          ↪️ Share Loan
+          ↪️ Предоставить займ
         </a>
       </Space>
       <Divider />
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Title level={4}>Select Start and End Date:</Title>
+        <Title level={4}>Выберите начальную и конечную дату:</Title>
         <div style={{ marginLeft: "2%" }}>
           <SelectLoanRange setFromDate={setFromDate} setToDate={setToDate} />
         </div>

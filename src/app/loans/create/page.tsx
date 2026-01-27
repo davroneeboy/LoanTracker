@@ -26,15 +26,15 @@ const CreateLoanForm = () => {
         const data: LoanSchema = await response.json();
         router.push(`/loans/${data.id}`);
       } else {
-        console.error("Error:", response.status);
+        console.error("Ошибка:", response.status);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Ошибка:", error);
     }
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log("Не удалось:", errorInfo);
   };
 
   return (
@@ -49,10 +49,10 @@ const CreateLoanForm = () => {
       autoComplete="off"
     >
       <Form.Item
-        label="Amount"
+        label="Сумма"
         name="amount"
         rules={[
-          { required: true, message: "Please input an amount!" },
+          { required: true, message: "Пожалуйста, введите сумму!" },
           { validator: validateNumber },
         ]}
       >
@@ -60,10 +60,10 @@ const CreateLoanForm = () => {
       </Form.Item>
 
       <Form.Item
-        label="APR"
+        label="Годовая процентная ставка"
         name="apr"
         rules={[
-          { required: true, message: "Please input the APR!" },
+          { required: true, message: "Пожалуйста, введите годовую процентную ставку!" },
           { validator: validateNumber },
         ]}
       >
@@ -71,10 +71,10 @@ const CreateLoanForm = () => {
       </Form.Item>
 
       <Form.Item
-        label="Term"
+        label="Срок"
         name="term"
         rules={[
-          { required: true, message: "Please input the term!" },
+          { required: true, message: "Пожалуйста, введите срок!" },
           { validator: validateNumber },
         ]}
         initialValue={30}
@@ -83,23 +83,23 @@ const CreateLoanForm = () => {
       </Form.Item>
 
       <Form.Item
-        label="Status"
+        label="Статус"
         name="status"
-        rules={[{ required: true, message: "Please select a status!" }]}
+        rules={[{ required: true, message: "Пожалуйста, выберите статус!" }]}
         initialValue={"active"}
       >
         <Select
           options={[
-            { value: "active", label: "Active" },
-            { value: "inactive", label: "Inactive" },
+            { value: "active", label: "Активный" },
+            { value: "inactive", label: "Неактивный" },
           ]}
         />
       </Form.Item>
 
       <Form.Item
-        label="Owner ID"
+        label="ID владельца"
         name="owner_id"
-        rules={[{ required: true, message: "Please input an owner ID!" }]}
+        rules={[{ required: true, message: "Пожалуйста, введите ID владельца!" }]}
         initialValue={user}
       >
         <Input type="number" disabled={true} />
@@ -107,7 +107,7 @@ const CreateLoanForm = () => {
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
-          Submit
+          Отправить
         </Button>
       </Form.Item>
     </Form>
@@ -118,7 +118,7 @@ const CreateLoan = () => {
   const { user, setUser } = useUserContext();
   return (
     <>
-      <Title>{`Create Loan for User ${user}`}</Title>
+      <Title>{`Создать займ для пользователя ${user}`}</Title>
       <CreateLoanForm />
     </>
   );

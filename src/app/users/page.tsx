@@ -28,7 +28,7 @@ const Users = () => {
     });
   };
 
-  if (error) return <p>{`Error: ${error}`}</p>;
+  if (error) return <p>{`Ошибка: ${error}`}</p>;
 
   const columns: ColumnsType<UserSchema> = [
     {
@@ -40,26 +40,26 @@ const Users = () => {
       ),
     },
     {
-      title: "Username",
+      title: "Имя пользователя",
       dataIndex: "username",
       key: "username",
     },
     {
-      title: "Action",
+      title: "Действие",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
           {contextHolder}
           <a onClick={() => router.push(`/users/${record.id}`)}>
-            💸 View Loans
+            💸 Просмотр займов
           </a>
           <a
             onClick={() => {
               setUser(record.id);
-              openNotification(`User ${record.id} Logged In!`);
+              openNotification(`Пользователь ${record.id} вошел в систему!`);
             }}
           >
-            🔑 Switch User
+            🔑 Сменить пользователя
           </a>
         </Space>
       ),
@@ -68,7 +68,7 @@ const Users = () => {
 
   return (
     <div>
-      <Title>All Users</Title>
+      <Title>Все пользователи</Title>
       <Table
         style={{ width: "80%", margin: "0 auto" }}
         columns={columns}

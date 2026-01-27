@@ -15,12 +15,12 @@ const LoanRangeTable = ({
 }) => {
   const columns: ColumnsType<LoanRangeData> = [
     {
-      title: "Payment Date",
+      title: "Дата платежа",
       dataIndex: "payment_date",
       key: "paymentDate",
     },
     {
-      title: "Current Principal",
+      title: "Текущий основной долг",
       dataIndex: "current_principal",
       key: "currentPrincipal",
       render: (payment) =>
@@ -30,7 +30,7 @@ const LoanRangeTable = ({
         }),
     },
     {
-      title: "Aggregate Principal Paid",
+      title: "Всего выплачено основного долга",
       dataIndex: "aggregate_principal_paid",
       key: "aggregatePrincipalPaid",
       render: (payment) =>
@@ -40,7 +40,7 @@ const LoanRangeTable = ({
         }),
     },
     {
-      title: "Aggregate Interest Paid",
+      title: "Всего выплачено процентов",
       dataIndex: "aggregate_interest_paid",
       key: "aggregateInterestPaid",
       render: (payment) =>

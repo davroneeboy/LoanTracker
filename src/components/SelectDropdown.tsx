@@ -25,7 +25,7 @@ const SelectDropdown: React.FC<any> = ({ loanId, options }) => {
       {contextHolder}
       <Select
         showSearch
-        placeholder="Select a User"
+        placeholder="Выберите пользователя"
         optionFilterProp="children"
         onChange={onChange}
         filterOption={filterOption}
@@ -47,7 +47,7 @@ const SelectDropdown: React.FC<any> = ({ loanId, options }) => {
 
           if (data && data[0]) {
             if (data[0] === "success") {
-              openNotification("Loan Sharing Successful");
+              openNotification("Займ успешно предоставлен");
               router.push(`/users/${userId}`);
             } else {
               openNotification(`${JSON.stringify(data)}`);
@@ -57,7 +57,7 @@ const SelectDropdown: React.FC<any> = ({ loanId, options }) => {
           }
         }}
       >
-        Share Loan
+        Предоставить займ
       </Button>
     </>
   );

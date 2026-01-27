@@ -25,15 +25,15 @@ const CreateUserForm = () => {
         const data: UserSchema = await response.json();
         router.push(`/users/${data.id}`);
       } else {
-        console.error("Error:", response.status);
+        console.error("Ошибка:", response.status);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Ошибка:", error);
     }
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log("Не удалось:", errorInfo);
   };
   return (
     <Form
@@ -47,10 +47,10 @@ const CreateUserForm = () => {
       autoComplete="off"
     >
       <Form.Item<UserSchemaBase>
-        label="Username"
+        label="Имя пользователя"
         name="username"
         rules={[
-          { required: true, message: "Please input a username!" },
+          { required: true, message: "Пожалуйста, введите имя пользователя!" },
           { validator: validateUsername },
         ]}
       >
@@ -59,7 +59,7 @@ const CreateUserForm = () => {
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
-          Submit
+          Отправить
         </Button>
       </Form.Item>
     </Form>
@@ -68,7 +68,7 @@ const CreateUserForm = () => {
 
 const CreateUser = () => (
   <>
-    <Title>Create User</Title>
+    <Title>Создать пользователя</Title>
     <CreateUserForm />
   </>
 );

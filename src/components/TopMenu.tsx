@@ -19,39 +19,39 @@ const TopMenu = () => {
   const { user, setUser } = useUserContext();
   const items: MenuProps["items"] = [
     {
-      label: <Link href="/">Home</Link>,
+      label: <Link href="/">Главная</Link>,
       key: "home",
       icon: <HomeOutlined />,
     },
     {
-      label: "Users",
+      label: "Пользователи",
       key: "users",
       icon: <UserOutlined />,
       children: [
         {
-          label: <Link href="/users">Get All Users</Link>,
+          label: <Link href="/users">Все пользователи</Link>,
           key: "users-get-all",
           icon: <UsergroupAddOutlined />,
         },
         {
-          label: <Link href="/users/create">Create User</Link>,
+          label: <Link href="/users/create">Создать пользователя</Link>,
           key: "users-create",
           icon: <UserAddOutlined />,
         },
       ],
     },
     {
-      label: "Loans",
+      label: "Займы",
       key: "loans",
       icon: <BankOutlined />,
       children: [
         {
-          label: <Link href={`/users/${user}`}>My Loans</Link>,
+          label: <Link href={`/users/${user}`}>Мои займы</Link>,
           key: "loans-get-all",
           icon: <CopyOutlined />,
         },
         {
-          label: <Link href="/loans/create">Create Loan</Link>,
+          label: <Link href="/loans/create">Создать займ</Link>,
           key: "loans-create",
           icon: <FormOutlined />,
         },
@@ -62,7 +62,7 @@ const TopMenu = () => {
   return (
     <>
       <Menu mode="horizontal" items={items} />
-      <Alert message={`Logged in as User ${user}`} type="info" />
+      <Alert message={`Вход выполнен как пользователь ${user}`} type="info" />
     </>
   );
 };

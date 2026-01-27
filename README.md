@@ -1,66 +1,66 @@
-# Fullstack Loan Tracker Application
+# Полнофункциональное приложение для отслеживания займов
 
-## Online Demo
+## Онлайн демо
 
 - [Vercel App](https://andynullwong-gl-frontend.vercel.app/)
 
-## Installation
+## Установка
 
-To run this project locally, follow these steps:
+Чтобы запустить этот проект локально, выполните следующие шаги:
 
-1. Clone the repository:
+1. Клонируйте репозиторий:
 
    ```bash
    git clone https://github.com/andynullwong/loan-tracker-fullstack.git
    ```
 
-2. Install the dependencies:
+2. Установите зависимости:
 
    ```bash
    pnpm install
    ```
 
-3. Start the development server:
+3. Запустите сервер разработки:
 
    ```bash
    pnpm run dev
    ```
 
-## Features (Core)
+## Основные функции
 
-- [**Create a User:**](src/app/users/create/page.tsx) Users can create an account to access the app.
-- [**Create a Loan:**](src/app/loans/create/page.tsx) Users can create a new loan, specifying the initial principal balance, interest rate, and amortization term.
-- [**Fetch all User’s Loans:**](src/app/users/page.tsx) Users can view a list of all their saved loans.
-- [**Fetch the Amortization Term for a Loan:**](src/app/loans/[loanId]/page.tsx) Users can retrieve the amortization schedule for a specific loan.
-- [**Share a Loan with another User:**](src/app/loans/[loanId]/share/page.tsx) Users can share their loan details with other users.
-- [**Manage Current User State:**](src/context/user.context.tsx) Users can switch between profiles (User Ids) to perform operations on Loans that the specific users have access to.
+- [**Создать пользователя:**](src/app/users/create/page.tsx) Пользователи могут создать учетную запись для доступа к приложению.
+- [**Создать займ:**](src/app/loans/create/page.tsx) Пользователи могут создать новый займ, указав начальный основной баланс, процентную ставку и срок амортизации.
+- [**Получить все займы пользователя:**](src/app/users/page.tsx) Пользователи могут просмотреть список всех своих сохраненных займов.
+- [**Получить срок амортизации займа:**](src/app/loans/[loanId]/page.tsx) Пользователи могут получить график амортизации для конкретного займа.
+- [**Предоставить займ другому пользователю:**](src/app/loans/[loanId]/share/page.tsx) Пользователи могут предоставить детали своего займа другим пользователям.
+- [**Управление текущим состоянием пользователя:**](src/context/user.context.tsx) Пользователи могут переключаться между профилями (ID пользователей) для выполнения операций с займами, к которым у конкретных пользователей есть доступ.
 
-## Features (Extra)
+## Дополнительные функции
 
-- [**Edit Loan Details:**](src/app/loans/[loanId]/update/page.tsx) Was not specified in the scoring rubric but was well documented. There was a minor bug discovered with this endpoint which I mitigated away with form validation. Documented in `API Bug 1`
-- [**Form Validation:**](src/utils/formValidation.ts) Notifies end users when an input does not match the specified rule(s) and returns an error message.
-- **Proper error handling:** All async functions have a catch and will throw a [pop-up error message](src/components/SelectDropdown.tsx#L53), render the error message in the [ErrorMessage](src/components/ErrorMessage.tsx) component, or provide a `console.error` at minimum.
-- **Good style:** Leveraged Ant Design component library for faster velocity. For long term projects my preference is either TailwindCSS or at minimum Material UI.
-- [**State & component testing:**](src/__tests__) Included Jest & React Testing Library support to the application and included some testing for key React Components that rely on state.
+- [**Редактировать детали займа:**](src/app/loans/[loanId]/update/page.tsx) Не было указано в критериях оценки, но было хорошо задокументировано. Была обнаружена небольшая ошибка в этом эндпоинте, которую я устранил с помощью валидации формы. Документировано в `API Bug 1`
+- [**Валидация формы:**](src/utils/formValidation.ts) Уведомляет конечных пользователей, когда ввод не соответствует указанному правилу (правилам) и возвращает сообщение об ошибке.
+- **Правильная обработка ошибок:** Все асинхронные функции имеют обработку ошибок и будут показывать [всплывающее сообщение об ошибке](src/components/SelectDropdown.tsx#L53), отображать сообщение об ошибке в компоненте [ErrorMessage](src/components/ErrorMessage.tsx) или предоставлять минимум `console.error`.
+- **Хороший стиль:** Использована библиотека компонентов Ant Design для более быстрой разработки. Для долгосрочных проектов мое предпочтение - либо TailwindCSS, либо, как минимум, Material UI.
+- [**Тестирование состояния и компонентов:**](src/__tests__) Включена поддержка Jest & React Testing Library в приложение и добавлено тестирование ключевых React компонентов, которые зависят от состояния.
 
-## Technologies Used
+## Используемые технологии
 
-- **React**: A JavaScript library for building user interfaces.
-- **Next.js**: A Web Application framework.
-- **Ant Design**: React UI component library.
-- **Jest & React Testing Library**: For some simple snapshot testing of React Components.
+- **React**: JavaScript библиотека для создания пользовательских интерфейсов.
+- **Next.js**: Фреймворк для веб-приложений.
+- **Ant Design**: Библиотека компонентов React UI.
+- **Jest & React Testing Library**: Для простого snapshot тестирования React компонентов.
 
-## Design Decisions
+## Решения по дизайну
 
-- An `.env` file containing the URL of the external API is included in the root of the project strictly for convenience and should otherwise never be included in the repository. I decided to use [API Routes](src/app/api) as a simple API proxy for several reasons:
+- Файл `.env`, содержащий URL внешнего API, включен в корень проекта строго для удобства и в противном случае никогда не должен быть включен в репозиторий. Я решил использовать [API Routes](src/app/api) в качестве простого прокси API по нескольким причинам:
 
-  1.  Since the API is semi-private and is not protected with an API key, the API routes will mask the API host.
-  2.  Without visibility into how the external API will handle fetch requests on the client side, I wanted to reduce the risk of unforeseen issues like CORS errors.
-  3.  Scalability: While this is just an assessment of the front-end, any application that relies on user scopes/permissions and other services will deal with sensitive or increasingly complex data. Introducing the API route now will allow for additional business logic or middleware functions to be added without cluttering the front-end components.
+  1.  Поскольку API является полуприватным и не защищен ключом API, API routes будут скрывать хост API.
+  2.  Без видимости того, как внешний API будет обрабатывать fetch запросы на стороне клиента, я хотел снизить риск непредвиденных проблем, таких как ошибки CORS.
+  3.  Масштабируемость: Хотя это всего лишь оценка фронтенда, любое приложение, которое полагается на области видимости пользователей/разрешения и другие сервисы, будет работать с чувствительными или все более сложными данными. Введение API route сейчас позволит добавить дополнительную бизнес-логику или функции middleware без загромождения компонентов фронтенда.
 
-## Bugs Discovered / Feedback
+## Обнаруженные ошибки / Обратная связь
 
-- API Bug 1: When editing an existing Loan, assigning an `Owner ID` that is different that the current `User ID` does not throw an error on the API side and instead behaves as if I just shared the Loan to the newly assigned Owner. This issue is prevented on the Front-End using form validations.
-- API Bug 2: The `One-Many` or `Many-Many` relation between `User` and `Loan` is not enforced on the database. I was able to insert invalid User IDs, such as `0` or `999`. This risk is mitgated on the front end with form validations or limiting the options to valid users using the [`SelectDropdown`](src/components/SelectDropdown.tsx) Component of all Users.
-- Documentation: `POST: /loans/{loan_id}/share` is stating that a `200` response is a `string` type while the API is actually returning `[string]`. For now I prevented this issue by checking the 0th element's value in [`SelectDropdown` L51](src/components/SelectDropdown.tsx#L51)
-- Documentation: `LoanSchemaBase.status` is stated as a `string` but should more accurately be described as an `enum` of `active` and `inactive`. I only discovered this while testing invalid inputs.
+- API Bug 1: При редактировании существующего займа назначение `Owner ID`, который отличается от текущего `User ID`, не вызывает ошибку на стороне API и вместо этого ведет себя так, как будто я только что предоставил займ новому владельцу. Эта проблема предотвращается на фронтенде с помощью валидации форм.
+- API Bug 2: Связь `Один-ко-многим` или `Многие-ко-многим` между `User` и `Loan` не принудительна на уровне базы данных. Мне удалось вставить недопустимые ID пользователей, такие как `0` или `999`. Этот риск снижается на фронтенде с помощью валидации форм или ограничения опций до действительных пользователей с помощью компонента [`SelectDropdown`](src/components/SelectDropdown.tsx) всех пользователей.
+- Документация: `POST: /loans/{loan_id}/share` указывает, что ответ `200` имеет тип `string`, в то время как API фактически возвращает `[string]`. Пока я предотвратил эту проблему, проверяя значение 0-го элемента в [`SelectDropdown` L51](src/components/SelectDropdown.tsx#L51)
+- Документация: `LoanSchemaBase.status` указан как `string`, но должен быть более точно описан как `enum` из `active` и `inactive`. Я обнаружил это только при тестировании недопустимых входных данных.

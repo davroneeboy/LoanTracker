@@ -30,17 +30,17 @@ const LoanPage = ({ params }: { params: { loanId: string } }) => {
 
   return (
     <>
-      <Title>{`Loan ${loanId}`}</Title>
+      <Title>{`Займ ${loanId}`}</Title>
       <Space size="middle">
-        <a onClick={() => router.push(`/loans/${loanId}`)}>🗓️ Schedule</a>
+        <a onClick={() => router.push(`/loans/${loanId}`)}>🗓️ График</a>
         <a onClick={() => router.push(`/loans/${loanId}/history`)}>
-          💰 Payment History
+          💰 История платежей
         </a>
         <a onClick={() => router.push(`/loans/${loanId}/update`)}>
-          ✏️ Update Loan
+          ✏️ Обновить займ
         </a>
         <a onClick={() => router.push(`/loans/${loanId}/share`)}>
-          ↪️ Share Loan
+          ↪️ Предоставить займ
         </a>
       </Space>
       <Divider />

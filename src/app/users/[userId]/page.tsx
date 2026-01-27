@@ -25,11 +25,11 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
     setLoans(mapLoansToLoansById(data));
   }, [data, setLoans]);
 
-  if (error) return <p>{`Error: ${error}`}</p>;
+  if (error) return <p>{`Ошибка: ${error}`}</p>;
 
   const columns: ColumnsType<LoanSchema> = [
     {
-      title: "Loan ID",
+      title: "ID займа",
       dataIndex: "id",
       key: "loanId",
       render: (loanId) => (
@@ -37,7 +37,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       ),
     },
     {
-      title: "Amount",
+      title: "Сумма",
       dataIndex: "amount",
       key: "amount",
       render: (amount) =>
@@ -47,21 +47,23 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
         }),
     },
     {
-      title: "APR",
+      title: "Годовая процентная ставка",
       dataIndex: "apr",
       key: "apr",
       render: (apr) => `${apr}%`,
     },
     {
-      title: "Status",
+      title: "Статус",
       dataIndex: "status",
       key: "status",
       render: (status) => (
-        <Tag color={status === "active" ? "success" : "default"}>{status}</Tag>
+        <Tag color={status === "active" ? "success" : "default"}>
+          {status === "active" ? "Активный" : "Неактивный"}
+        </Tag>
       ),
     },
     {
-      title: "Owner ID",
+      title: "ID владельца",
       dataIndex: "owner_id",
       key: "ownerId",
       render: (userId) => (
@@ -69,19 +71,19 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
       ),
     },
     {
-      title: "Action",
+      title: "Действие",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => router.push(`/loans/${record.id}`)}>🗓️ Schedule</a>
+          <a onClick={() => router.push(`/loans/${record.id}`)}>🗓️ График</a>
           <a onClick={() => router.push(`/loans/${record.id}/history`)}>
-            💰 Payment History
+            💰 История платежей
           </a>
           <a onClick={() => router.push(`/loans/${record.id}/update`)}>
-            ✏️ Update Loan
+            ✏️ Обновить займ
           </a>
           <a onClick={() => router.push(`/loans/${record.id}/share`)}>
-            ↪️ Share Loan
+            ↪️ Предоставить займ
           </a>
         </Space>
       ),
@@ -103,9 +105,9 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
 
   return (
     <div>
-      <Title>{`User ${userId}`}</Title>
+      <Title>{`Пользователь ${userId}`}</Title>
 
-      <Title level={2}>My Loans</Title>
+      <Title level={2}>Мои займы</Title>
       <Table
         style={{ width: "80%", margin: "0 auto" }}
         columns={columns}
@@ -113,7 +115,7 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
         loading={{ size: "large", spinning: isLoading }}
       />
 
-      <Title level={2}>Shared Loans</Title>
+      <Title level={2}>Предоставленные займы</Title>
       <Table
         style={{ width: "80%", margin: "0 auto" }}
         columns={columns}

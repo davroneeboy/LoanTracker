@@ -53,30 +53,30 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
           router.push(`/users/${user}`);
         }
       } else {
-        console.error("Error:", response.status);
+        console.error("Ошибка:", response.status);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Ошибка:", error);
     }
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log("Не удалось:", errorInfo);
   };
 
   return (
     <>
-      <Title>{`Update Loan ${loanId}`}</Title>
+      <Title>{`Обновить займ ${loanId}`}</Title>
       <Space size="middle">
-        <a onClick={() => router.push(`/loans/${loanId}`)}>🗓️ Schedule</a>
+        <a onClick={() => router.push(`/loans/${loanId}`)}>🗓️ График</a>
         <a onClick={() => router.push(`/loans/${loanId}/history`)}>
-          💰 Payment History
+          💰 История платежей
         </a>
         <a onClick={() => router.push(`/loans/${loanId}/update`)}>
-          ✏️ Update Loan
+          ✏️ Обновить займ
         </a>
         <a onClick={() => router.push(`/loans/${loanId}/share`)}>
-          ↪️ Share Loan
+          ↪️ Предоставить займ
         </a>
       </Space>
       <Divider />
@@ -91,10 +91,10 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
         autoComplete="off"
       >
         <Form.Item
-          label="Amount"
+          label="Сумма"
           name="amount"
           rules={[
-            { required: true, message: "Please input an amount!" },
+            { required: true, message: "Пожалуйста, введите сумму!" },
             { validator: validateNumber },
           ]}
           initialValue={amount}
@@ -103,10 +103,10 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
         </Form.Item>
 
         <Form.Item
-          label="APR"
+          label="Годовая процентная ставка"
           name="apr"
           rules={[
-            { required: true, message: "Please input the APR!" },
+            { required: true, message: "Пожалуйста, введите годовую процентную ставку!" },
             { validator: validateNumber },
           ]}
           initialValue={apr}
@@ -115,10 +115,10 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
         </Form.Item>
 
         <Form.Item
-          label="Term"
+          label="Срок"
           name="term"
           rules={[
-            { required: true, message: "Please input the term!" },
+            { required: true, message: "Пожалуйста, введите срок!" },
             { validator: validateNumber },
           ]}
           initialValue={term}
@@ -127,23 +127,23 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
         </Form.Item>
 
         <Form.Item
-          label="Status"
+          label="Статус"
           name="status"
-          rules={[{ required: true, message: "Please select a status!" }]}
+          rules={[{ required: true, message: "Пожалуйста, выберите статус!" }]}
           initialValue={status}
         >
           <Select
             options={[
-              { value: "active", label: "Active" },
-              { value: "inactive", label: "Inactive" },
+              { value: "active", label: "Активный" },
+              { value: "inactive", label: "Неактивный" },
             ]}
           />
         </Form.Item>
 
         <Form.Item
-          label="Owner ID"
+          label="ID владельца"
           name="owner_id"
-          rules={[{ required: true, message: "Please input an owner ID!" }]}
+          rules={[{ required: true, message: "Пожалуйста, введите ID владельца!" }]}
           initialValue={ownerId}
         >
           <Input type="number" disabled={true} />
@@ -152,11 +152,11 @@ const UpdateLoan = ({ params }: { params: { loanId: string } }) => {
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           {user === ownerId ? (
             <Button type="primary" htmlType="submit">
-              Submit
+              Отправить
             </Button>
           ) : (
             <Button type="primary" htmlType="submit" disabled={true}>
-              Only Owners Can Change Loan
+              Только владельцы могут изменять займ
             </Button>
           )}
         </Form.Item>
