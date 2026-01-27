@@ -22,6 +22,9 @@ const LoanTable = ({
   data: LoanScheduleSchema[];
   isLoading?: boolean;
 }) => {
+  // Убеждаемся, что data - это массив
+  const safeData = Array.isArray(data) ? data : [];
+
   const columns: ColumnsType<LoanScheduleSchema> = [
     {
       title: "Дата платежа",
@@ -78,7 +81,7 @@ const LoanTable = ({
       key: "totalInterest",
       render: (_, record, index) => (
         <span className="text-orange-600 font-semibold">
-          {rollingTotalInterest(data)[index].toLocaleString("en-US", {
+          {rollingTotalInterest(safeData)[index].toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
           })}
@@ -110,7 +113,7 @@ const LoanTable = ({
       </div>
       <Table
         columns={columns}
-        dataSource={appendKeyProp(data)}
+        dataSource={appendKeyProp(safeData)}
         pagination={{
           pageSize: 12,
           showSizeChanger: true,

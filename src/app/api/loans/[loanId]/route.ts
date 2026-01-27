@@ -9,69 +9,101 @@ type LoanSchemaBaseWithUserIdRequired = PartiallyOptional<
   "owner_id"
 >;
 
-export const GET = async (req: NextRequest) => {
-  const { pathname, searchParams } = req.nextUrl;
-
-  const url = new URL(
-    `${pathname.replace("/api/", "")}?${searchParams.toString()}`,
-    process.env.GL_API
-  );
-
-  const res = await fetch(url, {
-    cache: "no-store",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!res.ok) {
-    const errorData = await res.json();
-
-    return NextResponse.json(
-      {
-        error: errorData,
-        statusCode: res.status,
-      },
-      { status: res.status }
-    );
+const getApiUrl = (pathname: string, searchParams: URLSearchParams): string => {
+  const baseUrl = process.env.GL_API;
+  
+  if (!baseUrl || baseUrl.trim() === "") {
+    throw new Error("GL_API environment variable is not set");
   }
 
-  const data: LoanScheduleSchema = await res.json();
+  const path = pathname.replace("/api/", "");
+  const queryString = searchParams.toString();
+  const fullPath = queryString 
+    ? `${path}?${queryString}`
+    : path;
+  
+  return `${baseUrl.replace(/\/$/, "")}/${fullPath.replace(/^\//, "")}`;
+};
 
-  return NextResponse.json(data);
+export const GET = async (req: NextRequest) => {
+  try {
+    const { pathname, searchParams } = req.nextUrl;
+    const url = getApiUrl(pathname, searchParams);
+
+    const res = await fetch(url, {
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({ message: "Unknown error" }));
+
+      return NextResponse.json(
+        {
+          error: errorData,
+          statusCode: res.status,
+        },
+        { status: res.status }
+      );
+    }
+
+    const data: LoanScheduleSchema = await res.json();
+
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: {
+          detail: error instanceof Error ? error.message : "Internal server error",
+        },
+        statusCode: 500,
+      },
+      { status: 500 }
+    );
+  }
 };
 
 export const PUT = async (req: NextRequest) => {
-  const { pathname, searchParams } = req.nextUrl;
-  const body: LoanSchemaBaseWithUserIdRequired = await req.json();
+  try {
+    const { pathname, searchParams } = req.nextUrl;
+    const body: LoanSchemaBaseWithUserIdRequired = await req.json();
+    const url = getApiUrl(pathname, searchParams);
 
-  const url = new URL(
-    `${pathname.replace("/api/", "")}?${searchParams.toString()}`,
-    process.env.GL_API
-  );
+    const res = await fetch(url, {
+      cache: "no-store",
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-  const res = await fetch(url, {
-    cache: "no-store",
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({ message: "Unknown error" }));
 
-  if (!res.ok) {
-    const errorData = await res.json();
+      return NextResponse.json(
+        {
+          error: errorData,
+          statusCode: res.status,
+        },
+        { status: res.status }
+      );
+    }
 
+    const data: LoanSchema = await res.json();
+
+    return NextResponse.json(data);
+  } catch (error) {
     return NextResponse.json(
       {
-        error: errorData,
-        statusCode: res.status,
+        error: {
+          detail: error instanceof Error ? error.message : "Internal server error",
+        },
+        statusCode: 500,
       },
-      { status: res.status }
+      { status: 500 }
     );
   }
-
-  const data: LoanSchema = await res.json();
-
-  return NextResponse.json(data);
 };

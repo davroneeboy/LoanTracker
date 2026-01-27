@@ -45,6 +45,9 @@ const Users = () => {
     );
   }
 
+  // Убеждаемся, что data - это массив
+  const usersData = Array.isArray(data) ? data : [];
+
   const columns: ColumnsType<UserSchema> = [
     {
       title: "ID",
@@ -101,7 +104,7 @@ const Users = () => {
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
         <Table
           columns={columns}
-          dataSource={appendKeyProp(data)}
+          dataSource={appendKeyProp(usersData)}
           loading={{ size: "large", spinning: isLoading }}
           pagination={{
             pageSize: 10,

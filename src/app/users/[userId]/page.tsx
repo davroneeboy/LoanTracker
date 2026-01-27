@@ -145,7 +145,10 @@ const UserPage = ({ params }: { params: { userId: string } }) => {
     },
   ];
 
-  const dataByOwner = data.reduce(
+  // Убеждаемся, что data - это массив
+  const loansData = Array.isArray(data) ? data : [];
+
+  const dataByOwner = loansData.reduce(
     (acc, item) => {
       const ownerId = item.owner_id;
       if (parseInt(userId) == ownerId) {
