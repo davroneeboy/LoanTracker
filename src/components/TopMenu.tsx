@@ -6,6 +6,7 @@ import {
   CopyOutlined,
   FormOutlined,
   HomeOutlined,
+  TableOutlined,
   UserAddOutlined,
   UserOutlined,
   UsergroupAddOutlined,
@@ -105,6 +106,19 @@ const TopMenu = () => {
           key: "loans-create",
         },
       ],
+    },
+    {
+      label: (
+        <Link
+          href="/sheets"
+          className="flex items-center gap-2 hover:text-blue-600 transition-colors"
+          aria-label="Данные из Google Таблиц"
+        >
+          <TableOutlined />
+          Google Таблицы
+        </Link>
+      ),
+      key: "sheets",
     },
   ];
 
