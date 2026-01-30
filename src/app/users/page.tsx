@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import UserSchema from "@/types/user.type";
+import type UserSchema from "@/types/user.type";
 import fetcher from "@/utils/fetcher";
 import { Space, Table, notification, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
@@ -39,9 +39,12 @@ const Users = () => {
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
-        Ошибка: {String(error)}
-      </div>
+      <>
+        {contextHolder}
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+          Ошибка: {String(error)}
+        </div>
+      </>
     );
   }
 
@@ -71,7 +74,6 @@ const Users = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          {contextHolder}
           <Button
             type="default"
             icon={<EyeOutlined />}
@@ -95,6 +97,7 @@ const Users = () => {
 
   return (
     <div className="space-y-6">
+      {contextHolder}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent mb-2">
           Все пользователи
